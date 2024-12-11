@@ -1,6 +1,6 @@
 package com.springboot101.limit.controller;
 
-import com.springboot101.limit.api.Limit;
+import com.springboot101.limit.annotation.Limit;
 import com.springboot101.limit.enmu.LimitType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,7 +26,6 @@ public class LimiterController {
     @Limit(key = "limitTest", period = 10, count = 3)
     @GetMapping("/limitTest1")
     public int testLimiter1() {
-
         return ATOMIC_INTEGER_1.incrementAndGet();
     }
 

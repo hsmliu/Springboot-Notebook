@@ -7,7 +7,7 @@ package com.springboot101.limit.interceptor;
 
 
 import com.google.common.collect.ImmutableList;
-import com.springboot101.limit.api.Limit;
+import com.springboot101.limit.annotation.Limit;
 import com.springboot101.limit.enmu.LimitType;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -55,7 +55,7 @@ public class LimitInterceptor {
      * @description 切面
      * @date 2020/4/8 13:04
      */
-    @Around("execution(public * *(..)) && @annotation(com.springboot101.limit.api.Limit)")
+    @Around("execution(public * *(..)) && @annotation(com.springboot101.limit.annotation.Limit)")
     public Object interceptor(ProceedingJoinPoint pjp) {
         MethodSignature signature = (MethodSignature) pjp.getSignature();
         Method method = signature.getMethod();
@@ -83,10 +83,10 @@ public class LimitInterceptor {
         ImmutableList<String> keys = ImmutableList.of(StringUtils.join(limitAnnotation.prefix(), key));
         try {
             String luaScript = buildLuaScript();
-            RedisScript<Number> redisScript = new DefaultRedisScript<>(luaScript, Number.class);
-            Number count = limitRedisTemplate.execute(redisScript, keys, limitCount, limitPeriod);
+            RedisScript<Long> redisScript = new DefaultRedisScript<>(luaScript, Long.class);
+            Long count = limitRedisTemplate.execute(redisScript, keys, limitCount, limitPeriod);
             logger.info("Access try count is {} for name={} and key = {}", count, name, key);
-            if (count != null && count.intValue() <= limitCount) {
+            if (count <= limitCount) {
                 return pjp.proceed();
             } else {
                 throw new RuntimeException("You have been dragged into the blacklist");

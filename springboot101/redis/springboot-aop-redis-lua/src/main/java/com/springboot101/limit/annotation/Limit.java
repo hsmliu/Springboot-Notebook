@@ -1,4 +1,4 @@
-package com.springboot101.limit.api;
+package com.springboot101.limit.annotation;
 
 import com.springboot101.limit.enmu.LimitType;
 
