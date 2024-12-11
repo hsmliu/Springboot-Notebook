@@ -12,24 +12,24 @@ spring:
         driver-class-name: com.mysql.cj.jdbc.Driver
         jdbc-url: jdbc:mysql://127.0.0.1:3306/db0?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
         username: root
-        password: 123456
+        password: 19930803
       db1:
         type: com.zaxxer.hikari.HikariDataSource
         driver-class-name: com.mysql.cj.jdbc.Driver
         jdbc-url: jdbc:mysql://127.0.0.1:3306/db1?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
         username: root
-        password: 123456
+        password: 19930803
     # 具体规则配置
     rules:
       sharding:
         # 自动分片表规则配置
-#        auto-tables:
-#          t_order:
-#            actual-data-sources: db$->{0..1}
-#            sharding-strategy:
-#              standard:
-#                sharding-column: order_date
-#                sharding-algorithm-name: t_order_mod
+        auto-tables:
+          t_order:
+            actual-data-sources: db$->{0..1}
+            sharding-strategy:
+              standard:
+                sharding-column: order_date
+                sharding-algorithm-name: t_order_mod
         # 分片算法定义
         sharding-algorithms:
           # 自定义分片算法名称

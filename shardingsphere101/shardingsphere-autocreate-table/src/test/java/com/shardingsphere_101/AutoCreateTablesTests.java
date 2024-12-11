@@ -37,14 +37,14 @@ class AutoCreateTablesTests {
     }
 
     /**
-     * 删除 t_order 表
+     * 修改 t_order 表
      *
      * @author 公众号：程序员小富
      */
     @DisplayName("修改分片表字段长度")
     @Test
     public void autoModifyOrderTableTest() {
-
+        // 执行发现只有一张表修改了字段长度
         jdbcTemplate.execute("ALTER TABLE t_order MODIFY COLUMN order_number varchar(500);");
     }
 
